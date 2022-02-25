@@ -45,7 +45,9 @@ print(expression("MUL", [Pow, Mul, Add, Neg]))
 x = expression("add", [-2, 5])
 y = expression("add", [-3, x])
 z = expression("add", [x,y])
-a = expression("abs", [z])
+a = expression("abs", [-4])
 
+
+print("\nAnd be solved:\n")
 print(a)
 print(solve(a))
