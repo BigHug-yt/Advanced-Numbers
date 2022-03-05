@@ -1,4 +1,5 @@
-from numbersImpl import expression, num, solve
+from numbersImpl import expression, num
+from solver import solve
 
 print("all number variants:\n")
 print(Int := num("INT", 1)) # integer number
@@ -46,7 +47,6 @@ x = expression("add", [-2, 5])
 y = expression("add", [-3, x])
 z = expression("add", [x,y])
 a = expression("abs", [-4])
-
 
 print("\nAnd be solved:\n")
 print(a)

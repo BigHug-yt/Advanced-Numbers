@@ -1,20 +1,3 @@
-def solve(expr, lvl=0):
-	if lvl == 0:
-		if type(expr) == num:
-			return num
-			
-		if expr.Type == "NUMB":
-			return expr.Args[0]
-			
-		if expr.Type == "ABS":
-			arg1 = solve(expr.Args[0], lvl)
-			if type(arg1) == num:
-				return arg1.abs()
-			if arg1.Type == "NUMB":
-				return arg1.Args[0].abs()
-	return expr
-
-
 class NumVal:
 	def __init__(self):
 		pass
