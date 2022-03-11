@@ -202,6 +202,17 @@ class num:
 		if self.Type == "OMEGA":
 			return "\u03C9"
 
+	def __add__(self, x):
+		return expression("ADD", [self, x])
+	def __sub__(self, x):
+		return expression("SUB", [self, x])
+	def __mul__(self, x):
+		return expression("MUL", [self, x])
+	def __truediv__(self, x):
+		return expression("DIV", [self, x])
+	def __pow__(self, x):
+		return expression("POW", [self, x])
+
 		raise Exception(self.Type + " can't (yet) be printed")
 	def abs(self):
 		if self.Type == "INT" or self.Type == "FLOAT" or self.Type == "ANGLE" or self.Type == "RAD":
@@ -280,18 +291,29 @@ class expression:
 			if self.Args[0].Type == "NUMB":
 				if self.Args[1].Type == "NUMB":
 					return f"{self.Args[0]} ^ {self.Args[1]}"
-				return f"{self.Args[0]} ^ ({self.Args[1]})"
+				return f"{self.Args[0]} ^({self.Args[1]})"
 			if self.Args[1].Type == "NUMB":
-				return f"({self.Args[0]}) ^ {self.Args[1]}"
-			return f"({self.Args[0]}) ^ ({self.Args[1]})"
+				return f"({self.Args[0]})^{self.Args[1]}"
+			return f"({self.Args[0]})^({self.Args[1]})"
 
 		if self.Type == "ROOT":
 			if self.Args[0].Type == "NUMB":
 				if self.Args[1].Type == "NUMB":
-					return f"{self.Args[0]} ^ (1/{self.Args[1]})"
-				return f"{self.Args[0]} ^ (1/({self.Args[1]}))"
+					return f"{self.Args[0]} ^(1/{self.Args[1]})"
+				return f"{self.Args[0]} ^(1/({self.Args[1]}))"
 			if self.Args[1].Type == "NUMB":
-				return f"({self.Args[0]}) ^ (1/{self.Args[1]})"
-			return f"({self.Args[0]}) ^ (1/({self.Args[1]}))"
+				return f"({self.Args[0]})^(1/{self.Args[1]})"
+			return f"({self.Args[0]})^(1/({self.Args[1]}))"
 
 		raise Exception(self.Type, "has not yet a supported str type")
+				
+	def __add__(self, x):
+		return expression("add", [self, x])
+	def __sub__(self, x):
+		return expression("sub", [self, x])
+	def __mul__(self, x):
+		return expression("mul", [self, x])
+	def __truediv__(self, x):
+		return expression("div", [self, x])
+	def __pow__(self, x):
+		return expression("pow", [self, x])

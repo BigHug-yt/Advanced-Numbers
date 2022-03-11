@@ -51,3 +51,16 @@ a = expression("abs", [-4])
 print("\nAnd be solved:\n")
 print(a)
 print(solve(a))
+
+print("\n\n")
+x=num("int",90)
+y=num("pi")
+z=x*y
+b=z**z
+print(x+y)
+print(x-y)
+print(x*y)
+print(x/y)
+print(x**y)
+print(x+y+x)
+print(b)
