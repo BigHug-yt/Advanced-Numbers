@@ -133,7 +133,12 @@ class ExpVal:
 	def ADD(self, exp):
 		if len(exp.Args) < 2:
 			raise Exception("an ADD expression should at least have 2 arguments, got", len(exp.Args))
-
+		self.ValidateExprList(exp.Args)
+		for arg in exp.Args:
+			if type(arg) == expression and arg.Type == "ADD":
+				for argarg in arg.Args:
+					exp.Args.append(argarg)
+				exp.Args.remove(arg)
 		self.ValidateExprList(exp.Args)
 
 	def SUB(self, exp):
@@ -145,7 +150,12 @@ class ExpVal:
 	def MUL(self, exp):
 		if len(exp.Args) < 2:
 			raise Exception("a MUL expression should at least have 2 arguments, got", len(exp.Args))
-
+		self.ValidateExprList(exp.Args)
+		for arg in exp.Args:
+			if type(arg) == expression and arg.Type == "MUL":
+				for argarg in arg.Args:
+					exp.Args.append(argarg)
+				exp.Args.remove(arg)
 		self.ValidateExprList(exp.Args)
 
 	def DIV(self, exp):

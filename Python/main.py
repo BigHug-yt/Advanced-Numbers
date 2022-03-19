@@ -52,7 +52,7 @@ print("\nAnd be solved:\n")
 print(a)
 print(solve(a))
 
-print("\n\n")
+print("\n\nOperator overloading:\n")
 x=num("int",90)
 y=num("pi")
 z=x*y
