@@ -1,51 +1,59 @@
 from numbersImpl import num, expression
 
-class solver:
-	def __init__(self):
-		pass
-	class lvl_0:
-		def __init__(self):
-			pass
-		def numb(self,expr):
-			return expr.Args[0]
+def Neg(arg):
+	if arg.Type == "NUMB":
+		if arg.Args[0].Type == "INT" or arg.Args[0].Type == "FLOAT" or arg.Args[0].Type == "ANGLE" or arg.Args[0].Type == "RAD":
+			return expression("NUMB", [num(arg.Args[0].Type, -arg.Args[0].Val)])
+		return expression("NEG", [arg])
+	if arg.Type == "NEG":
+		return arg.Args[0]
+
+def Abs(arg):
+	if arg.Type == "NUMB":
+		if arg.Args[0].Type == "INT" or arg.Args[0].Type == "FLOAT" or arg.Args[0].Type == "ANGLE" or arg.Args[0].Type == "RAD":
+			return expression("NUMB", [num(arg.Args[0].Type, abs(arg.Args[0].Val))])
+		return expression("ABS", [arg])
+	if arg.Type == "ABS":
+		return expression("ABS", [arg.Args[0]])
+
+def Add(arg1, arg2):
+	if arg1.Type == "NUMB":
+		if arg2.Type == "NUMB":
+			if arg1.Args[0].Type == "INT" and arg2.Args[0].Type == "INT":
+				return expression("NUMB", [num("INT", arg1.Args[0].Val+arg2.Args[0].Val)])
+			if arg1.Args[0].Type == "INT" and arg2.Args[0].Type == "FLOAT":
+				return expression("NUMB", [num("FLOAT", arg1.Args[0].Val+arg2.Args[0].Val)])
+			if arg1.Args[0].Type == "FLOAT" and arg2.Args[0].Type == "INT":
+				return expression("NUMB", [num("FLOAT", arg1.Args[0].Val+arg2.Args[0].Val)])
+			if arg1.Args[0].Type == "FLOAT" and arg2.Args[0].Type == "FLOAT":
+				return expression("NUMB", [num("FLOAT", arg1.Args[0].Val+arg2.Args[0].Val)])
+			if arg1.Args[0].Type == "ANGLE" and arg2.Args[0].Type == "ANGLE":
+				return expression("NUMB", [num("ANGLE", arg1.Args[0].Val+arg2.Args[0].Val)])
+			if arg1.Args[0].Type == "RAD" and arg2.Args[0].Type == "RAD":
+				return expression("NUMB", [num("RAD", arg1.Args[0].Val+arg2.Args[0].Val)])
+
+			raise Exception(f"adding numbers with types {arg1.Args[0].Type} and {arg2.Args[0].Type} is not (yet) supported")
+		raise Exception(f"adding {arg2.Type} to NUMB is not (yet) supported")
+	raise Exception(f"adding to {arg1.Type} is not yet supported")
 			
-		def abs(self,expr):
-			arg1 = solve(expr.Args[0],0)
-			if type(arg1) == num:
-				return arg1.abs()
-			if type(arg1) == expression:
-				if arg1.Type == "NUMB":
-					return arg1.Args[0].abs()
-				if arg1.Type == "ABS":
-					return arg1
-				if arg1.Type == "NEG" and arg1.Args[0].Type == "NUMB":
-					return arg1.Args[0].Args[0]
-				return arg1
-			
-			
-		def solve(self,expr):
-			if type(expr) == num:
-				return num
-				
-			if type(expr) == expression:
-				if expr.Type == "NUMB":
-					return self.numb(expr)
-				if expr.Type == "ABS":
-					return self.abs(expr)
-				return expr
-			raise Exception(f"type {type(expr)} can't yet be solved on this lvl")
+def solve(expr):
+	if type(expr) == num:
+		return expression("NUMB", [expr])
+	if type(expr) == expression:
+		if expr.Type == "NUMB":
+			return expr
+		if expr.Type == "NEG":
+			arg = solve(expr.Args[0])
+			return Neg(arg)
+		if expr.Type == "ABS":
+			arg = solve(expr.Args[0])
+			return Abs(arg)
+		if expr.Type == "ADD":
+			# only works for 2 args for now!!!
+			arg1 = solve(expr.Args[0])
+			arg2 = solve(expr.Args[1])
+			return Add(arg1, arg2)
 
+		raise Exception(f"solving an expression of type {expr.Type} is not (yet) implemented")
 
-				
-	def solve(self,expr,lvl):
-		if lvl == 0:
-			lvl0 = self.lvl_0()
-			return lvl0.solve(expr)
-		raise Exception(f"{lvl} is not a valid solve lvl")
-
-
-
-
-def solve(expr, lvl=0):
-	Solver = solver()
-	return Solver.solve(expr,lvl)
+	raise Exception(f"solving a type {type(expr)} is not (yet) implemented")

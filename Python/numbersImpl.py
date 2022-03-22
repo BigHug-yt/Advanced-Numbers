@@ -224,10 +224,6 @@ class num:
 		return expression("POW", [self, x])
 
 		raise Exception(self.Type + " can't (yet) be printed")
-	def abs(self):
-		if self.Type == "INT" or self.Type == "FLOAT" or self.Type == "ANGLE" or self.Type == "RAD":
-			return num(self.Type, abs(self.Val))
-		return self
 
 
 expTypes = ["NUMB", "NEG", "ABS", "ADD", "SUB", "MUL", "DIV", "POW", "ROOT"]
