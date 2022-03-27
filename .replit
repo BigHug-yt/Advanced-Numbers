@@ -1,4 +1,4 @@
 language = "C++"
 #language = "python3"
-run = "g++ C++/main.cpp -o main && ./main"
+run = "g++ -c C++/*.cpp && g++ -o C++/main -g *.o && ./C++/main && rm *.o"
 #run = "python Python/main.py"

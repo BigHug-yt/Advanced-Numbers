@@ -1,6 +1,8 @@
 #include <iostream>
+#include "expression.h"
 
 int main(){
-	std::cout << "hello world\n";
+	expression a;
+	a.hello_world();
 	return 0;
 }
